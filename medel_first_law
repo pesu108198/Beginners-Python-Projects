@@ -1,0 +1,29 @@
+def solve_mendel(k, m, n):
+    # Total population size
+    t = k + m + n
+    
+    # Total number of possible mating pairs (combinations)
+    # Using t*(t-1) as the denominator for simplicity in probability addition
+    total_pairs = t * (t - 1)
+    
+    # Probability of picking two homozygous recessive (n, n)
+    # They always produce recessive offspring (100% or 1/1)
+    prob_nn = (n * (n - 1)) / total_pairs
+    
+    # Probability of picking one heterozygous and one recessive (m, n) or (n, m)
+    # They produce recessive offspring 50% of the time (1/2)
+    prob_mn = (2 * m * n) / total_pairs
+    
+    # Probability of picking two heterozygous (m, m)
+    # They produce recessive offspring 25% of the time (1/4)
+    prob_mm = (m * (m - 1)) / total_pairs
+    
+    # Sum the recessive probabilities weighted by their inheritance chance
+    prob_recessive = (prob_nn * 1) + (prob_mn * 0.5) + (prob_mm * 0.25)
+    
+    # The answer is the complement: 1 - P(recessive)
+    return 1 - prob_recessive
+
+# Sample Dataset
+k, m, n = 2, 2, 2
+print(round(solve_mendel(k, m, n), 5))
